@@ -1,0 +1,74 @@
+<section class="quinn-card-section">
+  <div class="page-width">
+    <h2 class="center">{{ section.settings.heading }}</h2>
+    <ul class="quinn-card-list quinn-card-slider">
+      {%- for block in section.blocks -%}
+        <li class="quinn-card-item">
+          {%- assign product = block.settings.product -%}
+          <a href="{{ product.url }}" class="quinn-card-box">
+            {% if product.metafields.custom.video != blank %}
+              <video
+                src="{{ product.metafields.custom.video.value.sources[1].url }}"
+                loop
+                muted
+                playsinline
+                autoplay
+              ></video>
+            {% else %}
+              <video src="{{block.settings.video.sources[1].url}}" loop muted playsinline autoplay></video>
+            {% endif %}
+            <div class="product-detail">
+              <div class="product-media">
+                <img src="{{ product.featured_media | image_url: width: 50 }}" alt="">
+              </div>
+              <h4>{{ product.title }}</h4>
+              <div class="product--money center">{{ product.price | money }}</div>
+            </div>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+  {
+  "name": "Quiin",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Quinn Card",
+      "type": "quinn_card",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Produc Video"
+        },
+        {
+          "type": "product",
+          "label": "Product",
+          "id": "product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quiin"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
